@@ -10,7 +10,7 @@ namespace CodeSippets
         {
             var fileUtils = new FileUtils();
             var input =
-              fileUtils.ReadFileToStringArray(@"C:\Users\booths\Downloads\c-small-practice.in");            
+              fileUtils.ReadFileToStringArray(@"C:\temp\ggcj\C-small-practice.in");                 
             var currentCase = 1;
             var currentLine = 1;
             var caseCount = int.Parse(fileUtils.GetCountOfCases(input));
@@ -20,10 +20,15 @@ namespace CodeSippets
                 var result=string.Empty;
                 //MAGIC GOES HERE  
                 var L = input[currentLine].Split(' ')[0];
-                var X = input[currentLine].Split(' ')[1];
+                var X = int.Parse(input[currentLine].Split(' ')[1]);
                 var str = input[currentLine + 1];
 
-                str = string.Concat(Enumerable.Repeat(str, int.Parse(X)));
+                if (X>12)
+                {
+                    X = (X%4) + 12;
+                }
+
+                str = string.Concat(Enumerable.Repeat(str, X));
 
                 if (str.Distinct().Count() == 1)
                 {
@@ -39,7 +44,7 @@ namespace CodeSippets
                     for (int i = 1; i < str.Length; i++)
                     {
                         var subI = str.Substring(0, i);
-                        if (subI.ToCharArray().Aggregate(mq) == 'i')
+                        if (subI.ToCharArray().Select(c => c.ToString()).ToArray().Aggregate(FoldFunc) == "i")
                         {
                             for (int j = 1; j < str.Length - i; j++)
                             {
@@ -48,9 +53,9 @@ namespace CodeSippets
 
                                 var
                                 blnJ = subJ
-                                    .ToCharArray().Aggregate(mq) == 'j';
+                                    .ToCharArray().Select(c => c.ToString()).ToArray().Aggregate(FoldFunc) == "j";
                                 var blnK = subK
-                                    .ToCharArray().Aggregate(mq) == 'k';
+                                    .ToCharArray().Select(c => c.ToString()).ToArray().Aggregate(FoldFunc) == "k";
 
                                 if (blnJ && blnK) result = "YES";
 
@@ -73,18 +78,78 @@ namespace CodeSippets
             Console.ReadKey();
         }
 
-        private static char mq(char left, char right)
+        private static string FoldFunc(string left, string right)
         {
-            if (left == right) return '1';
-            if (left=='1') return right;
-            if (right == '1') return left;
-            if (left == 'i' && right == 'j') return 'k';
-            if (left == 'i' && right == 'k') return 'j';
-            if (left == 'j' && right == 'i') return 'k';
-            if (left == 'j' && right == 'k') return 'i';
-            if (left == 'k' && right == 'i') return 'j';
-            if (left == 'k' && right == 'j') return 'i';
-            throw new Exception();
+            var multiply = new Dictionary<string, string>
+            {
+                {"1,1", "1"},
+                {"1,i", "i"},
+                {"1,j", "j"},
+                {"1,k", "k"},
+                {"1,-1", "-1"},
+                {"1,-i", "-i"},
+                {"1,-j", "-j"},
+                {"1,-k", "-k"},
+                {"-1,1", "-1"},
+                {"-1,i", "-i"},
+                {"-1,j", "-j"},
+                {"-1,k", "-k"},
+                {"-1,-1", "1"},
+                {"-1,-i", "i"},
+                {"-1,-j", "j"},
+                {"-1,-k", "k"},
+                {"i,1", "i"},
+                {"i,i", "-1"},
+                {"i,j", "k"},
+                {"i,k", "-j"},
+                {"i,-1", "-i"},
+                {"i,-i", "1"},
+                {"i,-j", "-k"},
+                {"i,-k", "j"},
+                {"-i,1", "-i"},
+                {"-i,i", "1"},
+                {"-i,j", "-k"},
+                {"-i,k", "j"},
+                {"-i,-1", "i"},
+                {"-i,-i", "-1"},
+                {"-i,-j", "k"},
+                {"-i,-k", "-j"},
+                {"j,1", "j"},
+                {"j,i", "-k"},
+                {"j,j", "-1"},
+                {"j,k", "i"},
+                {"j,-1", "-j"},
+                {"j,-i", "k"},
+                {"j,-j", "1"},
+                {"j,-k", "-i"},
+                {"-j,1", "-j"},
+                {"-j,i", "k"},
+                {"-j,j", "1"},
+                {"-j,k", "-i"},
+                {"-j,-1", "j"},
+                {"-j,-i", "-k"},
+                {"-j,-j", "-1"},
+                {"-j,-k", "i"},
+                {"k,1", "k"},
+                {"k,i", "j"},
+                {"k,j", "-i"},
+                {"k,k", "-1"},
+                {"k,-1", "-k"},
+                {"k,-i", "-j"},
+                {"k,-j", "-i"},
+                {"k,-k", "1"},
+                {"-k,1", "-k"},
+                {"-k,i", "-j"},
+                {"-k,j", "-i"},
+                {"-k,k", "1"},
+                {"-k,-1", "k"},
+                {"-k,-i", "j"},
+                {"-k,-j", "-i"},
+                {"-k,-k", "-1"}
+            };
+
+            var join = left + "," + right;
+            return multiply[join];
         }
     }
 }

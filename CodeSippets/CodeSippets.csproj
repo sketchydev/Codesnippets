@@ -49,13 +49,14 @@
     <Compile Include="Boilerplates\Graph.cs" />
     <Compile Include="Boilerplates\Searches.cs" />
     <Compile Include="FileUtils.cs" />
-    <Compile Include="GGCJ_2015\Q_Cv2.cs" />
+    <Compile Include="GGCJ_2014\GGCJ_2014_1A_A.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Euler\" />
     <Folder Include="GGCJ_2013\" />
     <Folder Include="GGCJ_2014\Inputs\" />
+    <Folder Include="GGCJ_2015\" />
     <Folder Include="GGCJ_APAC_TEST_A\" />
     <Folder Include="GGCJ_APAC_TEST_B\" />
     <Folder Include="GGCJ_Templates\" />

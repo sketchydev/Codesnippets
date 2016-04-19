@@ -48,8 +48,7 @@
     <Compile Include="Boilerplates\DijkstraDistanceCalculator.cs" />
     <Compile Include="Boilerplates\Graph.cs" />
     <Compile Include="Boilerplates\Searches.cs" />
-    <Compile Include="FileUtils.cs" />
-    <Compile Include="GGCJ_2014\GGCJ_2014_1A_A.cs" />
+    <Compile Include="GGCJ2016\Q_D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

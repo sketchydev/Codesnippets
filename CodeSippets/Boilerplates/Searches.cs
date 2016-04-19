@@ -10,7 +10,6 @@ namespace CodeSippets.Boilerplates
             public List<Node> Children;
         }
 
-
         public static Node BFS(Node root, string caseToFind)
         {
 

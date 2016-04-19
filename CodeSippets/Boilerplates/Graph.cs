@@ -5,7 +5,7 @@ namespace CodeSippets.Boilerplates
 {
     public class Graph
     {
-        internal IDictionary<string, Node> Nodes { get; private set; }
+        internal IDictionary<string, Node> Nodes { get; }
 
         public Graph()
         {
@@ -34,10 +34,8 @@ namespace CodeSippets.Boilerplates
         readonly IList<NodeConnection> _connections;
         internal string Name { get; private set; }
         internal double DistanceFromStart { get; set; }
-        internal IEnumerable<NodeConnection> Connections
-        {
-            get { return _connections; }
-        }
+        internal IEnumerable<NodeConnection> Connections => _connections;
+
         public Node(string name)
         {
             Name = name;
@@ -45,7 +43,7 @@ namespace CodeSippets.Boilerplates
         }
         internal void AddConnection(Node targetNode, int distance, bool twoWay)
         {
-            if (targetNode == null) throw new ArgumentNullException("targetNode");
+            if (targetNode == null) throw new ArgumentNullException(nameof(targetNode));
             if (targetNode == this) throw new ArgumentException("Node may not connect to itself.");
             if (distance <= 0) throw new ArgumentException("Distance must be positive.");
             _connections.Add(new NodeConnection(targetNode, distance));
